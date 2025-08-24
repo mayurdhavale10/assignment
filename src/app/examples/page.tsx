@@ -26,9 +26,7 @@ export default function ExamplesPage() {
     <main className="p-8 space-y-10">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Examples</h1>
-        <Link href="/" className="text-blue-600 underline">
-          Home
-        </Link>
+        <Link href="/" className="text-blue-600 underline">Home</Link>
       </header>
 
       <section className="max-w-sm space-y-2">

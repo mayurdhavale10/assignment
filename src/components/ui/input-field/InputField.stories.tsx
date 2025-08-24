@@ -1,5 +1,4 @@
-/** @jsxImportSource react */
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import { useState } from 'react';
 import InputField, { type InputFieldProps } from './InputField';
 import * as React from 'react';

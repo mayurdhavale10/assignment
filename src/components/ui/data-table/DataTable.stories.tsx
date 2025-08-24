@@ -1,10 +1,7 @@
-/** @jsxImportSource react */
-import type { Meta, StoryObj } from "@storybook/nextjs";
+import type { Meta, StoryObj } from '@storybook/nextjs';
 import DataTable, { type DataTableProps } from './DataTable';
 import * as React from 'react';
 
-
-// Bind the generic to a concrete type so Storybook can infer args
 type User = { id: number; name: string; email: string; age: number };
 const DataTableUser = (props: DataTableProps<User>) => <DataTable<User> {...props} />;
 
