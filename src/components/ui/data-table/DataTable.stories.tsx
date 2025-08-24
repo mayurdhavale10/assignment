@@ -1,5 +1,5 @@
 /** @jsxImportSource react */
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from "@storybook/nextjs";
 import DataTable, { type DataTableProps } from './DataTable';
 import * as React from 'react';
 

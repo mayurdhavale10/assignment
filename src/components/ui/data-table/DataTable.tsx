@@ -45,7 +45,7 @@ function compareValues(a: unknown, b: unknown): number {
   // Strings (locale-aware)
   return String(a).localeCompare(String(b), undefined, {
     sensitivity: 'base',
-    numeric: true
+    numeric: true,
   });
 }
 
@@ -77,22 +77,30 @@ function DataTable<T extends Record<string, unknown>>({
   const toggleSort = (col: Column<T>) => {
     if (!col.sortable) return;
     setSort((prev) => {
-      if (!prev || prev.key !== col.dataIndex) return { key: col.dataIndex, direction: 'asc' };
+      if (!prev || prev.key !== col.dataIndex) {
+        return { key: col.dataIndex, direction: 'asc' };
+      }
       return { key: col.dataIndex, direction: prev.direction === 'asc' ? 'desc' : 'asc' };
     });
   };
 
   const allChecked = selectable && selected.size === sorted.length && sorted.length > 0;
 
-  const notify = (set: Set<number>) => {
-    onRowSelect?.(Array.from(set).map((i) => sorted[i]));
+  const notify = (setOfIdx: Set<number>) => {
+    const selectedRows = Array.from(setOfIdx).map((i) => sorted[i]);
+    if (selectedRows.length && onRowSelect) {
+      onRowSelect(selectedRows); // <-- no dangling expression; explicit call
+    } else if (!selectedRows.length && onRowSelect) {
+      onRowSelect([]); // make sure consumers know it’s empty when deselecting all
+    }
   };
 
   const toggleRow = (rowIndex: number) => {
     setSelected((prev) => {
       const next = new Set(prev);
       if (multiple) {
-        next.has(rowIndex) ? next.delete(rowIndex) : next.add(rowIndex);
+        if (next.has(rowIndex)) next.delete(rowIndex);
+        else next.add(rowIndex);
       } else {
         next.clear();
         next.add(rowIndex);
@@ -131,13 +139,17 @@ function DataTable<T extends Record<string, unknown>>({
             )}
             {columns.map((col) => {
               const isActive = sort && sort.key === col.dataIndex;
-              const ariaSort = isActive ? (sort!.direction === 'asc' ? 'ascending' : 'descending') : 'none';
+              const ariaSort: React.AriaAttributes['aria-sort'] = isActive
+                ? sort!.direction === 'asc'
+                  ? 'ascending'
+                  : 'descending'
+                : 'none';
 
               return (
                 <th
                   key={col.key}
                   scope="col"
-                  aria-sort={ariaSort as React.AriaAttributes['aria-sort']}
+                  aria-sort={ariaSort}
                   className={cn(
                     'px-4 py-2 text-left text-sm font-semibold text-gray-700 dark:text-gray-200 select-none',
                     col.sortable && 'cursor-pointer'

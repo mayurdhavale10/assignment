@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import InputField from '@/components/ui/input-field/InputField';
 import DataTable, { type Column } from '@/components/ui/data-table/DataTable';
 
@@ -25,7 +26,9 @@ export default function ExamplesPage() {
     <main className="p-8 space-y-10">
       <header className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Examples</h1>
-        <a href="/" className="text-blue-600 underline">Home</a>
+        <Link href="/" className="text-blue-600 underline">
+          Home
+        </Link>
       </header>
 
       <section className="max-w-sm space-y-2">
