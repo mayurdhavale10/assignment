@@ -1,6 +1,4 @@
-// Shims for Next’s generated .next/types/validator.ts so editors stop complaining.
-
-/* eslint-disable @typescript-eslint/no-empty-interface */
+// Shims for Next's generated .next/types/validator.ts so editors stop complaining.
 
 declare module './routes.js' {
   // Using string/unknown keeps the types minimal yet valid.
@@ -15,4 +13,5 @@ declare module '*.jsxs' {
 }
 
 // Keep the symbol present but non-problematic for eslint.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type LayoutProps<T = unknown> = unknown;
